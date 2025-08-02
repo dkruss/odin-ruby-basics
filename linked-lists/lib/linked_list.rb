@@ -28,11 +28,11 @@ class LinkedList
 
   def size
     length = 0
-    if self.head.nil?
+    current_node = self.head
+    if current_node.nil?
       length
     else
       length = 1
-      current_node = self.head
       until current_node.next_node.nil?
         length += 1
         current_node = current_node.next_node
@@ -72,15 +72,53 @@ class LinkedList
   end
 
   def pop
-    #TODO
+    if self.size == 0 || self.size == 1
+      self.head = nil
+    else
+      current_node = self.head
+      until current_node.next_node.next_node.nil?
+        current_node = current_node.next_node
+      end
+      current_node.next_node = nil
+    end
   end
 
   def contains?(value)
-    #TODO
+    contained = false
+    current_node = self.head
+    if current_node.nil?
+      return
+    elsif current_node.value == value
+      contained = true
+    else
+      until current_node.next_node.nil?
+        current_node = current_node.next_node
+        if current_node.value == value
+          contained = true
+          return contained
+        end
+      end
+    end
+    contained
   end
 
   def find(value)
-    #TODO
+    idx = 0
+    current_node = self.head
+    if current_node.nil?
+      return nil
+    elsif current_node.value == value
+      return idx
+    else
+      until current_node.next_node.nil?
+        idx += 1
+        current_node = current_node.next_node
+        if current_node.value == value
+          return idx
+        end
+      end
+    end
+    return nil
   end
 
   def insert_at(value, index)

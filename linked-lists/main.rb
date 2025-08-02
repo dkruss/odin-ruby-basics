@@ -10,7 +10,6 @@ list.append('parrot')
 list.append('hamster')
 list.append('snake')
 list.append('turtle')
-puts list
 
 puts 'Testing #size'
 puts list.size
@@ -25,12 +24,17 @@ p list.at(3).next_node
 puts list.at(3).next_node.value
 
 puts 'Testing #contains?'
-puts list.contains?('cat')
-puts list.contains?('cast')
+puts "contains dog? #{list.contains?('dog')}"
+puts "contains cat? #{list.contains?('cat')}"
+puts "contains cast? #{list.contains?('cast')}"
+puts "contains turtle? #{list.contains?('turtle')}"
 
 puts 'Testing #find'
+puts "Find 'catz': #{list.find('catz')}"
 puts "Find 'cat': #{list.find('cat')}"
+puts "Find 'turtle': #{list.find('turtle')}"
 puts "Find 'cast': #{list.find('cast')}"
+p list.find('cast')
 
 puts list
 

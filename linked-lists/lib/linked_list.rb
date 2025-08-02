@@ -122,11 +122,41 @@ class LinkedList
   end
 
   def insert_at(value, index)
-    #TODO
+    new_node = Node.new(value)
+    current_node = self.head
+    previous_node = current_node
+    if index == 0
+      self.prepend(value)
+    elsif index > self.size
+      return
+    else
+      current_idx = 0
+      until current_idx == index
+        current_idx += 1
+        previous_node = current_node
+        current_node = current_node.next_node
+      end
+      new_node.next_node = current_node
+      previous_node.next_node = new_node
+    end
   end
 
   def remove_at(index)
-    #TODO
+    current_node = self.head
+    previous_node = current_node
+    if index == 0
+      self.head = current_node.next_node
+    elsif index >= self.size
+      return
+    else
+      current_idx = 0
+      until current_idx == index
+        current_idx += 1
+        previous_node = current_node
+        current_node = current_node.next_node
+      end
+      previous_node.next_node = current_node.next_node
+    end
   end
 
   def to_s

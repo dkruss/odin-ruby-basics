@@ -41,7 +41,20 @@ puts list
 puts 'Testing #remove_at'
 list.remove_at(3)
 puts list
+list.remove_at(0)
+puts list
+list.remove_at(10)
+puts list
+list.remove_at(5) 
+puts list
 
 puts 'Testing #insert_at'
 list.insert_at('papagei',3)
+puts list
+list.insert_at('zeroth',0)
+puts list
+list.insert_at('toobig',10)
+puts list
+puts list.size
+list.insert_at('end',7)
 puts list

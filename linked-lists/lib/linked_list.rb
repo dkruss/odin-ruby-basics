@@ -9,10 +9,10 @@ class LinkedList
 
   def append(value)
     new_node = Node.new(value)
-    if self.head().nil?
+    if self.head.nil?
       self.head = new_node
     else
-      current_node = self.head()
+      current_node = self.head
       until current_node.next_node.nil?
         current_node = current_node.next_node
       end
@@ -22,12 +22,23 @@ class LinkedList
 
   def prepend(value)
     new_node = Node.new(value)
-    new_node.next_node = self.head()
+    new_node.next_node = self.head
     self.head = new_node
   end
 
   def size
-    #TODO
+    length = 0
+    if self.head.nil?
+      length
+    else
+      length = 1
+      current_node = self.head
+      until current_node.next_node.nil?
+        length += 1
+        current_node = current_node.next_node
+      end
+    end
+    length
   end
 
   def head
@@ -35,11 +46,29 @@ class LinkedList
   end
 
   def tail
-    #TODO
+    current_node = self.head
+    if current_node.nil? || current_node.next_node.nil?
+      current_node
+    else
+      until current_node.next_node.nil?
+        current_node = current_node.next_node
+      end
+    end
+    current_node
   end
 
   def at(index)
-    #TODO
+    current_node = self.head
+    if index == 0
+      current_node
+    else
+      current_idx = 0
+      until current_idx == index
+        current_idx += 1
+        current_node = current_node.next_node
+      end
+    end
+    current_node
   end
 
   def pop

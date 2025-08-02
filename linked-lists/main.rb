@@ -15,9 +15,13 @@ puts list
 puts 'Testing #size'
 puts list.size
 
+puts  'Testing #tail'
+p list.tail
+
 puts 'Testing #at'
+puts list.at(0).value
 puts list.at(3).value
-puts list.at(3).next_node
+p list.at(3).next_node
 puts list.at(3).next_node.value
 
 puts 'Testing #contains?'

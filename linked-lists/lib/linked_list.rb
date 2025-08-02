@@ -1,96 +1,173 @@
 require_relative 'node'
 
 class LinkedList
-  attr_accessor :node_list
+  attr_accessor :head
 
   def initialize
-    @node_list = []
+    @head = nil
   end
 
   def append(value)
     new_node = Node.new(value)
-    unless self.node_list.empty?
-      self.node_list[-1].next_node = new_node
+    if self.head.nil?
+      self.head = new_node
+    else
+      current_node = self.head
+      until current_node.next_node.nil?
+        current_node = current_node.next_node
+      end
+      current_node.next_node = new_node
     end
-    self.node_list << new_node
   end
 
   def prepend(value)
     new_node = Node.new(value)
-    unless self.node_list.empty?
-      new_node.next_node = self.node_list[0]
-    end
-    self.node_list.unshift(new_node)
+    new_node.next_node = self.head
+    self.head = new_node
   end
 
   def size
-    self.node_list.length
+    length = 0
+    current_node = self.head
+    if current_node.nil?
+      length
+    else
+      length = 1
+      until current_node.next_node.nil?
+        length += 1
+        current_node = current_node.next_node
+      end
+    end
+    length
   end
 
   def head
-    self.node_list[0]
+    @head
   end
 
   def tail
-    self.node_list[-1]
+    current_node = self.head
+    if current_node.nil? || current_node.next_node.nil?
+      current_node
+    else
+      until current_node.next_node.nil?
+        current_node = current_node.next_node
+      end
+    end
+    current_node
   end
 
   def at(index)
-    self.node_list[index]
+    current_node = self.head
+    if index == 0
+      current_node
+    else
+      current_idx = 0
+      until current_idx == index
+        current_idx += 1
+        current_node = current_node.next_node
+      end
+    end
+    current_node
   end
 
   def pop
-    self.pop
-    self.node_list[-1].next_node = nil
+    if self.size == 0 || self.size == 1
+      self.head = nil
+    else
+      current_node = self.head
+      until current_node.next_node.next_node.nil?
+        current_node = current_node.next_node
+      end
+      current_node.next_node = nil
+    end
   end
 
   def contains?(value)
-    for node in self.node_list
-      return true if node.value == value
+    contained = false
+    current_node = self.head
+    if current_node.nil?
+      return
+    elsif current_node.value == value
+      contained = true
+    else
+      until current_node.next_node.nil?
+        current_node = current_node.next_node
+        if current_node.value == value
+          contained = true
+          return contained
+        end
+      end
     end
-    return false
+    contained
   end
 
   def find(value)
-    self.node_list.each_with_index { |node, idx| return idx if node.value == value }
+    idx = 0
+    current_node = self.head
+    if current_node.nil?
+      return nil
+    elsif current_node.value == value
+      return idx
+    else
+      until current_node.next_node.nil?
+        idx += 1
+        current_node = current_node.next_node
+        if current_node.value == value
+          return idx
+        end
+      end
+    end
     return nil
   end
 
   def insert_at(value, index)
+    new_node = Node.new(value)
+    current_node = self.head
+    previous_node = current_node
     if index == 0
       self.prepend(value)
-    elsif index == self.node_list.length - 1
-      self.append(value)
-    elsif index > 0 && index < self.node_list.length
-      new_node = Node.new(value)
-      left_sublist = self.node_list[..index - 1]
-      right_sublist = self.node_list[index..]
-      left_sublist[-1].next_node = new_node
-      new_node.next_node = right_sublist[0]
-      left_sublist << new_node
-      self.node_list = left_sublist + right_sublist
+    elsif index > self.size
+      return
+    else
+      current_idx = 0
+      until current_idx == index
+        current_idx += 1
+        previous_node = current_node
+        current_node = current_node.next_node
+      end
+      new_node.next_node = current_node
+      previous_node.next_node = new_node
     end
   end
 
   def remove_at(index)
+    current_node = self.head
+    previous_node = current_node
     if index == 0
-      self.node_list.shift
-    elsif index == self.node_list.length - 1
-      self.node_list.pop
-    elsif index > 0 && index < self.node_list.length
-      left_sublist = self.node_list[..index - 1]
-      right_sublist = self.node_list[index + 1..]
-      left_sublist[-1].next_node = right_sublist[0]
-      self.node_list = left_sublist + right_sublist
+      self.head = current_node.next_node
+    elsif index >= self.size
+      return
+    else
+      current_idx = 0
+      until current_idx == index
+        current_idx += 1
+        previous_node = current_node
+        current_node = current_node.next_node
+      end
+      previous_node.next_node = current_node.next_node
     end
   end
 
   def to_s
     string_representation = ""
-    for node in self.node_list
-      string_representation += "( #{node.value} ) -> "
+
+    current_node = self.head()
+    string_representation += "( #{current_node.value} ) -> "
+    until current_node.next_node.nil?
+      current_node = current_node.next_node
+      string_representation += "( #{current_node.value} ) -> "
     end
     string_representation += "nil"
-    string_representation
   end
 end

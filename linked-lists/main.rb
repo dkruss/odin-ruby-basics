@@ -3,16 +3,14 @@ require_relative 'lib/linked_list'
 list = LinkedList.new
 
 list.append('dog')
+puts list
 list.prepend('catz')
 list.append('cat')
 list.append('parrot')
 list.append('hamster')
 list.append('snake')
 list.append('turtle')
-
-puts list.node_list[0]
-puts list.node_list[0].next_node
-puts list.node_list[1]
+puts list
 
 puts 'Testing #size'
 puts list.size
